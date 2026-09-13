@@ -4,7 +4,7 @@
 
 > **Project status:** Active development / demonstration project.
 
-## 🚀 What AtmoNet Does
+##  What AtmoNet Does
 
 - 🌍 Interactive Tanzania weather and risk map powered by Leaflet
 - 🌡️ Weather monitoring and environmental indicators
@@ -17,7 +17,7 @@
 - 📄 Report and emergency-information sections
 - 🇹🇿 Tanzania-region-aware predictions using regional coordinates
 
-## 🧠 Machine Learning
+##  Machine Learning
 
 The ML service is implemented with **Python, FastAPI, pandas, NumPy, scikit-learn and joblib**. The trained model is stored in `ml_service/` together with its scaler, feature list and Tanzania region list.
 
@@ -32,7 +32,7 @@ The prediction pipeline:
 7. Sends the prediction to the Node.js risk engine.
 8. Converts rainfall, water level and humidity into a flood-risk assessment.
 
-## 🏗️ Architecture
+##  Architecture
 
 ```text
                          ┌─────────────────────┐
@@ -63,7 +63,7 @@ The prediction pipeline:
                          └─────────────────────┘
 ```
 
-## 📁 Project Structure
+##  Project Structure
 
 ```text
 atmonet/
@@ -99,7 +99,7 @@ atmonet/
 └── README.md
 ```
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Layer | Technologies |
 |---|---|
@@ -110,7 +110,7 @@ atmonet/
 | Mapping | Leaflet / React Leaflet |
 | Version Control | Git + GitHub |
 
-## ▶️ Run Locally
+##  Run Locally
 
 ### 1. Frontend
 
@@ -211,15 +211,15 @@ Example ML request:
 }
 ```
 
-## 🌐 Data Source
+##  Data Source
 
 AtmoNet's ML prediction service retrieves recent weather data from **Open-Meteo** using regional latitude/longitude coordinates. This makes the rainfall prediction pipeline more realistic than a purely static demo-data system.
 
-## ⚠️ Important Disclaimer
+##  Important Disclaimer
 
 AtmoNet is a research, educational and demonstration project. Its predictions and risk classifications should **not** be treated as a replacement for official emergency warnings or decisions by Tanzania's responsible authorities. Always follow official weather, disaster-management and evacuation guidance.
 
-## 🔐 Security & Deployment Notes
+##  Security & Deployment Notes
 
 Before production deployment:
 
@@ -232,7 +232,7 @@ Before production deployment:
 - Consider hosting frontend, backend and ML service as separate deployable services.
 - Add automated tests and CI checks before a production release.
 
-## 📌 Future Improvements
+##  Future Improvements
 
 - Real-time water-level/IoT sensor integration
 - More weather variables such as wind, pressure, humidity and cloud cover
@@ -243,7 +243,7 @@ Before production deployment:
 - Model monitoring, validation and scheduled retraining
 - Production database for historical observations and alerts
 
-## 👨‍💻 Project
+##  Project
 
 **AtmoNet — Tanzania Weather & Flood Early Warning System**
 
@@ -251,6 +251,6 @@ Built as a full-stack AI/ML and geospatial project focused on improving access t
 
 **Repository:** `dier2003/atmonet`
 
-## 📄 License
+##  License
 
 This project is intended for educational, research and demonstration purposes. See the repository license for terms of use.
