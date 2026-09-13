@@ -1,0 +1,2 @@
+import {Router} from 'express';
+const r=Router(); r.post('/',(req,res)=>{const q=(req.body.message||'').toLowerCase();let answer='Current demo conditions show 87% HIGH flood probability. Rainfall is 82 mm and water level is 4.8 m. Follow official emergency guidance.';if(q.includes('safe'))answer='Avoid flooded roads, move to higher ground when instructed, and follow official emergency alerts.';res.json({answer});});export default r;
