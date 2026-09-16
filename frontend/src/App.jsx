@@ -117,6 +117,8 @@ function riskClass(risk) {
 
 const RISK_COLORS = { critical: '#dc2626', high: '#f97316', moderate: '#eab308', safe: '#22c55e' };
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'https://atmonet-backend.onrender.com').replace(/\/$/, '');
+
 
 // ===============================
 // REGION FLOOD RISK CONTEXT
@@ -163,7 +165,7 @@ function RegionRiskProvider({ children }) {
 
     for (const region of tanzaniaRegions) {
       try {
-        const res = await fetch('http://localhost:5000/api/predict', {
+        const res = await fetch(`${API_BASE_URL}/api/predict`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ region: region.name, water_level: 4.0, humidity: 75 })
@@ -903,7 +905,7 @@ function Prediction() {
     setLoading(true);
     setErrorMsg(null);
     try {
-      const res = await fetch('http://localhost:5000/api/predict', {
+      const res = await fetch(`${API_BASE_URL}/api/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ region, water_level: 4.8, humidity: 80 })
