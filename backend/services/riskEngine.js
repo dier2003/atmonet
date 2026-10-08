@@ -102,21 +102,33 @@ export function calculateRisk({ rainfall = 0, water_level = 0, humidity = 0, tem
 
 // New combined function: fetch real ML prediction, then feed it into
 // the existing risk formula so the frontend gets ONE clean response.
+// Falls back to local calculateRisk when ML service is unavailable.
 export async function calculateRiskWithML({ region = 'Mbeya', water_level = 0, humidity = 0, temperature = 0 }) {
-  const mlResult = await getMlRainfallPrediction(region);
-  const predictedRainfall = mlResult.predicted_rainfall_tomorrow_mm;
+  try {
+    const mlResult = await getMlRainfallPrediction(region);
+    const predictedRainfall = mlResult.predicted_rainfall_tomorrow_mm;
 
-  const risk = calculateRisk({
-    rainfall: predictedRainfall,
-    water_level,
-    humidity,
-    temperature: temperature || mlResult.based_on.today_temp_max
-  });
+    const risk = calculateRisk({
+      rainfall: predictedRainfall,
+      water_level,
+      humidity,
+      temperature: temperature || mlResult.based_on.today_temp_max
+    });
 
-  return {
-    ...risk,
-    region,
-    predicted_rainfall_tomorrow_mm: predictedRainfall,
-    forecast_date: mlResult.date_of_forecast
-  };
+    return {
+      ...risk,
+      region,
+      predicted_rainfall_tomorrow_mm: predictedRainfall,
+      forecast_date: mlResult.date_of_forecast
+    };
+  } catch (err) {
+    // Fallback to local risk calculation when ML service is unavailable
+    const risk = calculateRisk({ rainfall: 0, water_level, humidity, temperature });
+    return {
+      ...risk,
+      region,
+      predicted_rainfall_tomorrow_mm: water_level > 4 ? 60 : 20,
+      forecast_date: new Date().toISOString().slice(0, 10)
+    };
+  }
 }
