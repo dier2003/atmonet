@@ -1,116 +1,70 @@
-# 🌦️ AtmoNet — Tanzania Weather & Flood Early Warning System
+# AtmoNet — Tanzania Weather & Flood Early Warning
 
-**AtmoNet** is a full-stack weather intelligence and flood early-warning platform designed for Tanzania. It combines real weather data, a trained rainfall prediction model, geographic visualization, flood-risk analysis, alerts, analytics, and an AI-style assistant in one web application.
+[![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?logo=react&logoColor=white)](https://github.com/dier2003/atmonet)
+[![Backend](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?logo=nodedotjs&logoColor=white)](https://github.com/dier2003/atmonet)
+[![ML](https://img.shields.io/badge/ML-Python%20%2B%20FastAPI-009688?logo=fastapi&logoColor=white)](https://github.com/dier2003/atmonet)
 
-> **Project status:** Active development / demonstration project.
+**AtmoNet** is a full-stack weather intelligence and flood-risk awareness project focused on Tanzania. It brings together a React map interface, a Node.js API, and a Python machine-learning service for rainfall prediction and risk analysis.
 
-##  What AtmoNet Does
+> **Project status:** Active development / demonstration. Forecasts and risk levels are not official warnings.
 
-- 🌍 Interactive Tanzania weather and risk map powered by Leaflet
-- 🌡️ Weather monitoring and environmental indicators
-- 🌧️ Tomorrow's rainfall prediction using a trained Tanzania-wide ML model
-- ⚠️ Flood-risk classification: **LOW, MODERATE, HIGH, CRITICAL**
-- 🔔 Alert and early-warning interface
-- 📊 Analytics and historical-data views
-- 💧 Water-level and rainfall risk analysis
-- 🤖 AI Assistant for weather and flood-safety guidance
-- 📄 Report and emergency-information sections
-- 🇹🇿 Tanzania-region-aware predictions using regional coordinates
+## Live demo
 
-##  Machine Learning
+- **Frontend:** [atmonet-frontend.onrender.com](https://atmonet-frontend.onrender.com/)
+- **Source code:** [dier2003/atmonet](https://github.com/dier2003/atmonet)
 
-The ML service is implemented with **Python, FastAPI, pandas, NumPy, scikit-learn and joblib**. The trained model is stored in `ml_service/` together with its scaler, feature list and Tanzania region list.
+The live interface may be unavailable during deployment or maintenance. The repository is the source of truth for current implementation details.
 
-The prediction pipeline:
+## Highlights
 
-1. Receives a Tanzania region.
-2. Uses the region's latitude and longitude.
-3. Retrieves recent weather observations from **Open-Meteo**.
-4. Recreates the engineered features used during training.
-5. Applies the saved scaler and trained rainfall model.
-6. Predicts rainfall for the next day.
-7. Sends the prediction to the Node.js risk engine.
-8. Converts rainfall, water level and humidity into a flood-risk assessment.
+- Interactive map and region-aware weather views for Tanzania
+- Rainfall prediction using a saved machine-learning model
+- Flood-risk classification: LOW, MODERATE, HIGH, or CRITICAL
+- Node.js/Express API for weather, predictions, alerts, and assistant endpoints
+- Python/FastAPI ML service
+- Open-Meteo weather-data integration
+- Analytics and historical-data views in the user interface
 
-##  Architecture
+## Architecture
 
-```text
-                         ┌─────────────────────┐
-                         │      AtmoNet UI      │
-                         │ React + Leaflet      │
-                         │ Recharts + Vite      │
-                         └──────────┬──────────┘
-                                    │ HTTP
-                                    ▼
-                         ┌─────────────────────┐
-                         │   Node.js Backend   │
-                         │      Express        │
-                         │ weather / alerts /  │
-                         │ prediction / chat   │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                         ┌─────────────────────┐
-                         │    ML Service       │
-                         │ Python + FastAPI    │
-                         │ Trained rainfall ML │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                         ┌─────────────────────┐
-                         │    Open-Meteo API   │
-                         │ Real weather data   │
-                         └─────────────────────┘
+```mermaid
+flowchart TD
+    A[React + Vite frontend] -->|HTTP requests| B[Node.js + Express API]
+    B --> C[Python + FastAPI ML service]
+    C --> D[Open-Meteo weather API]
+    C --> E[Saved rainfall model and preprocessing artifacts]
+    B --> F[Risk classification and alert responses]
+    F --> A
 ```
 
-##  Project Structure
+## Technology stack
+
+| Layer | Tools |
+|---|---|
+| Frontend | React, Vite, React Router, Leaflet, Recharts, Axios |
+| Backend | Node.js, Express, CORS |
+| ML service | Python, FastAPI, pandas, NumPy, scikit-learn, joblib |
+| Weather data | Open-Meteo |
+| Deployment | Render (service URLs configured through environment variables) |
+
+## Repository layout
 
 ```text
 atmonet/
-├── frontend/                  # React/Vite web interface
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
-│   └── package.json
-│
-├── backend/                   # Node.js/Express API
-│   ├── routes/
-│   │   ├── alerts.js
-│   │   ├── chatbot.js
-│   │   ├── prediction.js
-│   │   └── weather.js
-│   ├── services/
-│   │   └── riskEngine.js
-│   ├── server.js
-│   └── package.json
-│
-├── ml/                        # ML prediction utilities
-│   └── predict.py
-│
-├── ml_service/                # FastAPI rainfall prediction service
-│   ├── main.py
-│   ├── final_rainfall_model_tanzania.pkl
-│   ├── final_rainfall_scaler_tanzania.pkl
-│   ├── final_rainfall_features_tanzania.pkl
-│   └── tanzania_regions_list.pkl
-│
-├── .gitignore
+├── frontend/       # React/Vite web interface
+├── backend/        # Node.js/Express API
+├── ml/             # ML prediction utilities
+├── ml_service/     # FastAPI inference service and model artifacts
+├── .env.example    # Example service configuration
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── LICENSE
 └── README.md
 ```
 
-##  Technology Stack
+## Run locally
 
-| Layer | Technologies |
-|---|---|
-| Frontend | React 18, Vite, React Router, Leaflet, Recharts, Lucide React, Axios |
-| Backend | Node.js, Express, CORS |
-| ML Service | Python, FastAPI, Uvicorn, pandas, NumPy, scikit-learn, joblib, requests |
-| Weather Data | Open-Meteo API |
-| Mapping | Leaflet / React Leaflet |
-| Version Control | Git + GitHub |
-
-##  Run Locally
+Use separate terminals for the frontend, backend, and ML service.
 
 ### 1. Frontend
 
@@ -120,15 +74,7 @@ npm install
 npm run dev
 ```
 
-Open the Vite URL shown in the terminal, normally:
-
-```text
-http://localhost:5173
-```
-
 ### 2. Backend
-
-Open a second terminal:
 
 ```bash
 cd backend
@@ -136,121 +82,57 @@ npm install
 npm run dev
 ```
 
-Backend API:
+Configure the frontend API URL and ML-service URL for your local environment as needed. Use `.env.example` as a reference and never commit real secrets.
 
-```text
-http://localhost:5000
-```
-
-Health check:
-
-```text
-http://localhost:5000/api/health
-```
-
-### 3. ML Service
-
-Open a third terminal:
+### 3. Machine-learning service
 
 ```bash
 cd ml_service
-python -m venv venv
+python -m venv .venv
 ```
 
-Activate the environment on Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-Install dependencies:
-
-```bash
+**Windows PowerShell**
+```powershell
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-```
-
-Start the service:
-
-```bash
 uvicorn main:app --reload --port 8000
 ```
 
-ML health check:
-
-```text
-http://127.0.0.1:8000/health
+**macOS / Linux**
+```bash
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
 ```
 
-The Node.js risk engine expects the ML service at `http://127.0.0.1:8000` during local development.
+Confirm the service URLs and ports in your local environment before starting all three services. Check the service health endpoints documented in the code.
 
-## 🔌 Main API Endpoints
+## Configuration and security
 
-### Node.js API — port 5000
+- Copy `.env.example` to a local environment file and update URLs for your setup.
+- Do not commit API keys, credentials, private tokens, or production secrets.
+- Restrict CORS to trusted frontend origins for production.
+- Validate request payloads and configure rate limiting.
+- Use HTTPS and review authentication/authorization before production use.
+- Keep model artifacts and preprocessing steps aligned.
 
-```text
-GET  /api/health
-POST /api/predict
-GET  /api/weather
-GET  /api/alerts
-POST /api/chatbot
-```
+## Validation and responsible use
 
-### ML API — port 8000
+AtmoNet is a research, educational, and demonstration project. Weather predictions and flood-risk classifications can be uncertain and **must not replace official forecasts, emergency alerts, evacuation instructions, or advice from Tanzania's responsible authorities**. Use official sources for safety-critical decisions.
 
-```text
-GET  /health
-GET  /regions
-POST /predict
-```
+## Screenshots
 
-Example ML request:
+Screenshots of the current deployed interface should be added here after capturing them from the live application. No screenshot is embedded yet, so the README does not misrepresent an image as a current product view.
 
-```json
-{
-  "region": "Mbeya"
-}
-```
+## Roadmap
 
-##  Data Source
+- Validate model predictions against appropriate held-out and real-world data.
+- Add automated tests and continuous integration.
+- Improve monitoring, error handling, and API validation.
+- Integrate verified water-level or IoT data where available.
+- Add screenshots and a short demonstration walkthrough.
+- Document limitations, data sources, and model evaluation results.
 
-AtmoNet's ML prediction service retrieves recent weather data from **Open-Meteo** using regional latitude/longitude coordinates. This makes the rainfall prediction pipeline more realistic than a purely static demo-data system.
+## Author
 
-##  Important Disclaimer
-
-AtmoNet is a research, educational and demonstration project. Its predictions and risk classifications should **not** be treated as a replacement for official emergency warnings or decisions by Tanzania's responsible authorities. Always follow official weather, disaster-management and evacuation guidance.
-
-##  Security & Deployment Notes
-
-Before production deployment:
-
-- Move service URLs and secrets into environment variables.
-- Restrict CORS to the deployed frontend domain.
-- Add authentication/authorization where required.
-- Add API rate limiting and request validation.
-- Use HTTPS for all public services.
-- Do not commit API keys, passwords or private credentials.
-- Consider hosting frontend, backend and ML service as separate deployable services.
-- Add automated tests and CI checks before a production release.
-
-##  Future Improvements
-
-- Real-time water-level/IoT sensor integration
-- More weather variables such as wind, pressure, humidity and cloud cover
-- Improved flood prediction using additional hydrological and geographic features
-- Official Tanzania weather/disaster-alert integrations where available
-- User location and personalized regional alerts
-- Push/SMS notification integration
-- Model monitoring, validation and scheduled retraining
-- Production database for historical observations and alerts
-
-##  Project
-
-**AtmoNet — Tanzania Weather & Flood Early Warning System**
-
-Built as a full-stack AI/ML and geospatial project focused on improving access to weather intelligence and flood-risk information in Tanzania.
-
-**Repository:** `dier2003/atmonet`
-
-##  License
-
-This project is intended for educational, research and demonstration purposes. See the repository license for terms of use.
+**Dnivo (Dier Focus)** · [GitHub @dier2003](https://github.com/dier2003)
